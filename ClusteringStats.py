@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-import DBSCANViz as dbv
 from sklearn.cluster import KMeans, DBSCAN
 import matplotlib.pyplot as plt
 
