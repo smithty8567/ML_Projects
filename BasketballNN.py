@@ -13,14 +13,15 @@ class Stats(Dataset):
     def __init__(self):
         # Dataset
         # https://www.kaggle.com/datasets/drgilermo/nba-players-stats
-        df = pd.read_csv("stats_all.csv")
-        self.valid_positions = ['PG', 'PF', 'SF', 'C', 'SG']
-
+        df = pd.read_csv("stats_basic.csv")
+        #self.valid_positions = ['PG', 'PF', 'SF', 'C', 'SG']
+        self.valid_positions = ['PG', 'SF', 'C']
         # Dropping players who are labeled not one of the five core positions
         df = df[df['Pos'].isin(self.valid_positions)]
+        #print(df.info())
 
 
-        self.X = torch.tensor(df.iloc[:, 9:-1].to_numpy(), dtype=torch.float)
+        self.X = torch.tensor(df.iloc[:, 6:-1].to_numpy(), dtype=torch.float)
 
         #The labels are categorical so assigning each label a numeric value
         labels, uniques = pd.factorize(df.iloc[:, 3])
@@ -49,21 +50,25 @@ class Position(nn.Module):
         super(Position, self).__init__()
 
         #Normalizing the data of the features
-        self.norm = nn.BatchNorm1d(41)
+        self.norm = nn.BatchNorm1d(21)
 
         # Two hidden layer neural network
-        self.in_to_h1 = nn.Linear(41, 20)
-        self.h1_to_h2 = nn.Linear(20, 10)
-        self.h2_to_out = nn.Linear(10, 5)
+        self.in_to_h1 = nn.Linear(21, 50)
+        self.h1_to_h2 = nn.Linear(50, 25)
+        self.h2_to_h3 = nn.Linear(25, 15)
+        self.h3_to_h4 = nn.Linear(15, 10)
+        self.h4_to_out = nn.Linear(10, 3)
 
     def forward(self, x):
         x = self.norm(x)
         x = F.relu(self.in_to_h1(x))
         x = F.relu(self.h1_to_h2(x))
-        return self.h2_to_out(x)
+        x = F.relu(self.h2_to_h3(x))
+        x = F.relu(self.h3_to_h4(x))
+        return self.h4_to_out(x)
 
 
-def trainNN(epochs=10, batch_size=16, lr=0.005):
+def trainNN(epochs=10, batch_size=32, lr=0.001):
     # Load the Dataset
     bs = Stats()
 
@@ -82,6 +87,7 @@ def trainNN(epochs=10, batch_size=16, lr=0.005):
     running_loss = 0.0
     for epoch in range(epochs):
         for _, data in enumerate(data_loader, 0):
+            pos.train()
             x, y = data
 
             optimizer.zero_grad()
@@ -115,4 +121,4 @@ def trainNN(epochs=10, batch_size=16, lr=0.005):
 
 
 
-trainNN(epochs=20)
+trainNN(epochs=100)
