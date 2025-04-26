@@ -52,7 +52,7 @@ class Position(nn.Module):
         #Normalizing the data of the features
         self.norm = nn.BatchNorm1d(21)
 
-        # Two hidden layer neural network
+        # 5 hidden layer neural network
         self.in_to_h1 = nn.Linear(21, 50)
         self.h1_to_h2 = nn.Linear(50, 25)
         self.h2_to_h3 = nn.Linear(25, 15)
