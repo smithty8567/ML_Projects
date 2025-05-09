@@ -1,12 +1,30 @@
 # ML_Projects
 
-This is a repository that showcases multiple Machine Learning projects I have completed. They include clustering, neural networks, etc.
+This is a repository that showcases multiple Machine Learning projects I have completed. They include clustering, neural networks, bagging, and random forests.
 
-### Clustering Project
-The clustering project uses data on NBA players' stats from there individual seasons dating back to the 1980s. I used both simple basketball stats and all stats including advance statistics as the features. The amount and type of features did not change the output of the types of clusters that were forming. A more in depth analysis is written at the end of the python file describing the summary of what the algorithm decided the cluster the players into. In short, the players were clustered in the type of role they had on the team, not necessarily just position wise like all-around contributor (Lebron James, Larry Bird, Nikola Jokic) all-nba type of season, a role player season that contributed in the rotation but was not the main focus on offense, or a big man sort of role that encompasses strictly playing in the low post and not any outside presense on the offense (for example, Shaq or Rudy Gobert).
+## Clustering Project
+The clustering project uses data on NBA players' stats from there individual seasons dating back to the 1980s. I used both simple basketball stats and all stats including advance statistics as the features. The amount and type of features did not change the output of the types of clusters that were forming. A more in depth analysis is written at the end of the python file describing the summary of what the algorithm decided the cluster the players into.
 
-### Neural Network
-The neural network is ran on the same dataset as the clustering project. The neural network's job is to classify the players on one of the 5 core positions in basketball, [PG, SG, SF, PF, C]. The neural network was only getting about 70% on the training split and 68% on the validation split. I believe it was low because towards the more recent years in basketball, players will be classified on their position just based on size and defensive metrics. Like there is usually only one PG on the court at a time but that PG might play like a SG if the main ball handler is the SF. SO in the more recent ears, positions became more meaningless which makes classifying players on their position more difficult now.
+## Neural Network
+The neural network is ran on the same dataset as the clustering project. The neural network's job is to classify the players on 3 positions. I simplified the positions even more to just PG, SF, and C because of how basketball becomes positionless in the more recent years. This then makes the network have a harder time to train regardless of how many features are given because the amount of data is just not possible with how similar players play regardless of their position.
 
-## Update 1 on Neural Network
-I simplified the positions even more to just PG, SF, and C because of how basketball becomes positionless in the more recent years. This then makes the network have a harder time to train regardless of how many features are given because the amount of data is just not possible with how similar players play regardless of their position. A better way to use this Neural Network would train in on players in college. College basketball players play more into their dedicated position because College is more of a team game versus the NBA which teams can rely on just a player or two to do most of the work.
+![image](https://github.com/user-attachments/assets/32805cf7-1eac-4607-9029-eb00c1ce0f34)
+**Confusion Matrix for Neural Network**
+
+
+## Random Forests and Bagging
+The last two projects predict weather types and air pollution quality using both a random forest classifier and a bagging classifier with Linear SVC.
+
+### Features for Weather
+The features I used in the weather classifier were temperature, humidity, wind speed, precipitation %, atmospheric pressure, uv index, visibility (km). I dropped out features like season and location which would be very helpful to distinguish raining versus snowing and raining versus cloudy.
+
+### Features for Pollution
+The features used for pollution were temperature, humidity %, fine particle levels, coarse particle levels, nitrogen dioxide levels,
+sulfur dioxide levels, carbon monoxide levels, distance to industrial zone (km), population density. This classification had an easier time classifying use random forests opposed to bagging because of the nice differences in quality between dense populations versus nondense ones.
+
+![image](https://github.com/user-attachments/assets/9b7bca86-8789-478b-ac58-4346f74e60bf)
+**Confusion Matrix for Random Forest on Pollution Classification**
+
+
+
+
